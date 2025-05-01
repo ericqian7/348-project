@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Trips</title>
+</head>
+<body>
+    <h1>All Trips</h1>
+    <a href="{{ url_for('add_trip') }}">Add New Trip</a><br><br>
+    <form method="GET" action="{{ url_for('index') }}">
+        <label for="min_cost">Min Cost:</label>
+        <input type="number" name="min_cost" step="0.01">
+        <button type="submit">Filter</button>
+    </form>
+    <a href="{{ url_for('report') }}">Go to Trip Report</a>
+
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Cost</th>
+                <th>Distance</th>
+                <th>Travel Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in trips %}
+            <tr>
+                <td>{{ trip.cost }}</td>
+                <td>{{ trip.distance }}</td>
+                <td>{{ trip.travel_time }}</td>
+                <td>
+                    <a href="{{ url_for('edit_trip', id=trip.id) }}">Edit</a>
+                    <form action="{{ url_for('delete_trip', id=trip.id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
